@@ -11,192 +11,100 @@ import headers
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")))
 
-authors = [
-		{
-			name: 'Paul Harris',
-			twitter_handle: 'paulxharris'
-		},
-
-		{
-			name: 'Karen McVeigh',
-			twitter_handle: 'karenmcveigh1'
-		},
-
-		{
-			name: 'Ed Pilkington',
-			twitter_handle: 'edpilkington'
-		},
-
-		{
-			name: 'Adam Gabbatt',
-			twitter_handle: 'AdamGabbatt'
-		},
-
-		{
-			name: 'Matt Wells',
-			twitter_handle: 'MatthewWells'
-		},
-
-		{
-			name: 'Hadley Freeman',
-			twitter_handle: 'HadleyFreeman'
-		},
-
-		{
-			name: 'Richard Adams',
-			twitter_handle: 'RichardA'
-		},
-
-		{
-			name: 'Suzanne Goldenberg',
-			twitter_handle: 'suzyji'
-		},
-
-		{
-			name: 'Chris McGreal',
-			twitter_handle: 'chrismcgreal'
-		},
-
-		{
-			name: 'Dominic Rushe',
-			twitter_handle: 'dominicru'
-		},
-
-		{
-			name: 'Stuart Millar',
-			twitter_handle: 'stuartmillar159'
-		},
-
-		{
-			name: 'Brian Braiker',
-			twitter_handle: 'slarkpope'
-		},
-
-		{
-			name: 'Laurence Topham',
-			twitter_handle: 'loztopham'
-		},
-
-		{
-			name: 'Matt Williams',
-			twitter_handle: 'mattywills'
-		},
-
-		{
-			name: 'Ruth Spencer',
-			twitter_handle: 'onthewag'
-		},
-
-		{
-			name: 'Ryan Devereaux',
-			twitter_handle: 'Rdevro'
-		},
-
-		{
-			name: 'Tom McCarthy',
-			twitter_handle: 'TeeMcSee'
-		},
-
-		{
-			name: 'Ewen MacAskill',
-			twitter_handle: 'ewenmacaskill'
-		},
-
-		{
-			name: 'Amanda Michel',
-			twitter_handle: 'amichel'
-		},
-
-		{
-			name: 'Steve Busfield',
-			twitter_handle: 'Busfield'
-		},
-
-		{
-			name: 'Katie Rogers',
-			twitter_handle: 'katierogers'
-		},
-        {
-            name: 'Owen Gibson',
-            twitter_handle: 'owen_g'
-        },
-        {
-            name: 'Danny Taylor',
-            twitter_handle: 'DTGuardian'
-        },
-        {
-            name: 'Dominic Fifield',
-            twitter_handle: 'domfifield'
-        },
-        {
-            name: 'Donald McRae',
-            twitter_handle: 'donaldgmcrae'
-        },
-        {
-            name: 'Barney Ronay',
-            twitter_handle: 'barneyronay'
-        },
-        {
-            name: 'David Hytner',
-            twitter_handle: 'DaveHytner'
-        },
-        {
-            name: 'Stuart James',
-            twitter_handle: 'StuartJamesGNM'
-        },
-        {
-            name: 'Sid Lowe',
-            twitter_handle: 'sidlowe'
-        },
-        {
-            name: 'Raphael Honigstein',
-            twitter_handle: 'honistein'
-        },
-        {
-            name: 'Marcus Christenson',
-            twitter_handle: 'm_christenson'
-        },
-        {
-            name: 'James Dart',
-            twitter_handle: 'James_Dart'
-        },
-        {
-            name: 'Barry Glendenning',
-            twitter_handle: 'bglendenning'
-        },
-        {
-            name: 'Sachin Nakrani',
-            twitter_handle: 'SachinNakrani'
-        },
-        {
-            name: 'Jacob Steinberg',
-            twitter_handle: 'JacobSteinberg'
-        },
-        {
-            name: 'Paul Wilson',
-            twitter_handle: 'paulwilsongnm'
-        },
-        {
-            name: 'Jamie Jackson',
-            twitter_handle: 'GuardianJamieJ'
-        },
-        {
-            name: 'Paul Doyle',
-            twitter_handle: 'Paul_Doyle'
-        },
-        {
-			name: 'Matt Seaton',
-			twitter_handle: 'mattseaton'
-		}
+twitter_data = [('Paul Harris', 'paulxharris'),
+	('Karen McVeigh', 'karenmcveigh1'),
+	('Ed Pilkington', 'edpilkington'),
+	('Adam Gabbatt', 'AdamGabbatt'),
+	('Matt Wells', 'MatthewWells'),
+	('Hadley Freeman', 'HadleyFreeman'),
+	('Richard Adams', 'RichardA'),
+	('Suzanne Goldenberg', 'suzyji'),
+	('Chris McGreal', 'chrismcgreal'),
+	('Dominic Rushe', 'dominicru'),
+	('Stuart Millar', 'stuartmillar159'),
+	('Brian Braiker', 'slarkpope'),
+	('Laurence Topham', 'loztopham'),
+	('Matt Williams', 'mattywills'),
+	('Ruth Spencer', 'onthewag'),
+	('Ryan	Devereaux', 'Rdevro'),
+	('Tom McCarthy', 'TeeMcSee'),
+	('Ewen MacAskill', 'ewenmacaskill'),
+	('Amanda Michel', 'amichel'),
+	('Steve Busfield', 'Busfield'),
+	('Katie Rogers', 'katierogers'),
+	('Owen Gibson', 'owen_g'),
+	('Danny Taylor', 'DTGuardian'),
+	('Dominic Fifield', 'domfifield'),
+	('Donald McRae', 'donaldgmcrae'),
+	('Barney Ronay', 'barneyronay'),
+	('David Hytner', 'DaveHytner'),
+	('Stuart James', 'StuartJamesGNM'),
+	('Sid Lowe', 'sidlowe'),
+	('Raphael Honigstein', 'honistein'),
+	('Marcus Christenson', 'm_christenson'),
+	('James Dart', 'James_Dart'),
+	('Barry Glendenning', 'bglendenning'),
+	('Sachin Nakrani', 'SachinNakrani'),
+	('Jacob Steinberg', 'JacobSteinberg'),
+	('Paul Wilson', 'paulwilsongnm'),
+	('Jamie Jackson', 'GuardianJamieJ'),
+	('Paul Doyle', 'Paul_Doyle'),
+	('Matt Seaton', 'mattseaton'),
+	('Jonathan Freedland', 'Freedland'),
+	('David Hills', 'd_hills'),
 	]
+contributors = [{"name" : name, "twitter_handle" : handle} for (name, handle) in twitter_data]
+
+cache_seconds = 60 * 60
 
 class AllBylines(webapp2.RequestHandler):
 	def get(self):
-		data = {}
 
 		headers.json(self.response)
 		headers.set_cors_headers(self.response)
+		headers.set_cache_headers(self.response, cache_seconds)
+		self.response.out.write(json.dumps(contributors))
+
+twitter_lookup = {
+	"Owen Gibson" : {
+		"personal" : "owen_g",
+		"brand" : "guardianfootball"
+	},
+	"Jonathan Freedland" : {
+		"personal" : "Freedland"
+	},
+	"David Hills" : {
+		"personal" : "d_hills",
+		"brand" : "guardianfootball"
+	}
+}
+
+brand_by_country = {
+	"AU" : "GuardianAus",
+	"US" : "GuardianUS"
+}
+
+class BylineLookup(webapp2.RequestHandler):
+	def post(self):
+
+		byline = self.request.get("byline", None)
+		country = self.request.headers["X-AppEngine-Country"]
+
+		if not byline:
+			abort(400)
+
+		headers.json(self.response)
+		headers.set_cors_headers(self.response)
+		headers.set_cache_headers(self.response, cache_seconds)
+
+		data = twitter_lookup[byline]
+
+		if not "brand" in data:
+			data["brand"] = brand_by_country.get(country, "guardian")
+
 		self.response.out.write(json.dumps(data))
 
-app = webapp2.WSGIApplication([('/api/twitter/all', AllBylines)],
+app = webapp2.WSGIApplication([
+	('/api/twitter/all', AllBylines),
+	('/api/twitter/lookup', BylineLookup),],
                               debug=True)
