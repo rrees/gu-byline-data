@@ -5,8 +5,11 @@ import json
 import logging
 from urllib import quote, urlencode
 from google.appengine.api import urlfetch
+from google.appengine.ext import ndb
 
 import headers
+
+from models import Contributor
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")))
@@ -52,6 +55,7 @@ twitter_data = [('Paul Harris', 'paulxharris'),
 	('Matt Seaton', 'mattseaton'),
 	('Jonathan Freedland', 'Freedland'),
 	('David Hills', 'd_hills'),
+	('Juliette Garside', 'JulietteGarside'),
 	]
 contributors = [{"name" : name, "twitter_handle" : handle} for (name, handle) in twitter_data]
 
@@ -104,7 +108,37 @@ class BylineLookup(webapp2.RequestHandler):
 
 		self.response.out.write(json.dumps(data))
 
+class ProfilePathLookup(webapp2.RequestHandler):
+	def get(self):
+
+		profile_path = self.request.get("profile_path", None)
+		country = self.request.headers["X-AppEngine-Country"]
+
+		if not profile_path:
+			abort(400)
+
+		headers.json(self.response)
+		headers.set_cors_headers(self.response)
+		headers.set_cache_headers(self.response, cache_seconds)
+
+		key = ndb.Key(Contributor, profile_path)
+		contributor = key.get()
+
+		if not contributor:
+			abort(404)
+
+		data = {
+			"personal" : contributor.twitter_handle,
+			"brand" : brand_by_country.get(country, "guardian")
+		}
+
+		if contributor.twitter_brand_handle:
+			data['brand'] = contributor.twitter_brand_handle
+
+		self.response.out.write(json.dumps(data))
 app = webapp2.WSGIApplication([
 	('/api/twitter/all', AllBylines),
-	('/api/twitter/lookup', BylineLookup),],
+	('/api/twitter/lookup/byline', BylineLookup),
+	('/api/twitter/lookup', ProfilePathLookup),
+	],
                               debug=True)

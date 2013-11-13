@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Add contributor | Admin{% endblock %}
+
+{% block content %}
+<div class="fluid-wrap">
+	<div class="fluid-row">
+		<div class="col-12">
+			<h1 class="article-heading">Add contributor</h1>
+		</div>
+	</div>
+
+	<div class="fluid-row margin-top">
+		<div class="col-8">
+			{% for contributor in contributors %}
+			<section class="contributor-data">
+			<dl>
+				<dt>Profile path</dt><dd>{{contributor.profile_path}}</dd>
+				<dt>Twitter handle</dt><dd>{{contributor.twitter_handle}}</dd>
+				<dt>Brand Twitter handle</dt><dd>{{contributor.twitter_brand_handle}}</dd>
+			</dl>
+			</section>
+			{% endfor %}
+		</div>
+		<div class="col-4">
+			<h2 class="sub-heading">Add a new contributor</h2>
+			<form method="POST">
+				<div class="field">
+					<label>Profile path <input type="text" name="profile_path" required></label>
+				</div>
+				<div class="field">
+				<label>Twitter handle <input type="text" name="twitter_handle" required></label>
+				</div>
+				<div class="field">
+				<label>Brand Twitter account <input type="text" name="twitter_brand_handle"></label>
+				</div>
+				<div class="field">
+				<label>Google Plus Id <input type="text" name="google_plus_id"></label>
+				</div>
+				<button type="submit">Add</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
