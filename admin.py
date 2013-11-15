@@ -14,11 +14,22 @@ from models import Contributor
 import headers
 
 jinja_environment = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), "templates")))
+    loader=jinja2.FileSystemLoader(
+    	[os.path.join(os.path.dirname(__file__), "templates"),
+    	os.path.join(os.path.dirname(__file__), "templates", "admin")]))
+
+class AdminPage(webapp2.RequestHandler):
+	def get(self):
+		template = jinja_environment.get_template('admin/index.html')
+		
+		template_values = {}
+
+		self.response.out.write(template.render(template_values))		
+
 
 class AddContributor(webapp2.RequestHandler):
 	def get(self):
-		template = jinja_environment.get_template('admin-add-contributor.html')
+		template = jinja_environment.get_template('admin/add-contributor.html')
 		
 		template_values = {'contributors' : Contributor().query()}
 
@@ -46,5 +57,6 @@ class AddContributor(webapp2.RequestHandler):
 		self.redirect('/admin/add-contributor')
 
 app = webapp2.WSGIApplication([
+	('/admin', AdminPage),
 	('/admin/add-contributor', AddContributor),],
                               debug=True)

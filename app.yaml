@@ -1,5 +1,5 @@
 application: gu-byline-data
-version: 3
+version: 4
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -9,7 +9,7 @@ handlers:
   static_dir: static
 - url: /api/twitter/.*
   script: twitter.app
-- url: /admin/.*
+- url: /admin.*
   login: admin
   script: admin.app
 - url: /.*
