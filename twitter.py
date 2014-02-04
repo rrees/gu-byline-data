@@ -1,4 +1,5 @@
 import webapp2
+from webapp2 import abort
 import jinja2
 import os
 import json
@@ -8,6 +9,7 @@ from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
 
 import headers
+import gae
 
 from models import Contributor
 
@@ -114,12 +116,17 @@ class ProfilePathLookup(webapp2.RequestHandler):
 		profile_path = self.request.get("profile_path", None)
 		country = self.request.headers["X-AppEngine-Country"]
 
+		cache_time = 10 * 60
+		headers.json(self.response)
+		host = "http://www.theguardian.com"
+		if gae.is_development():
+			host = "*"
+		headers.set_cors_headers(self.response, host=host)
+
 		if not profile_path:
 			abort(400)
 
-		headers.json(self.response)
-		headers.set_cors_headers(self.response)
-		headers.set_cache_headers(self.response, cache_seconds)
+		headers.set_cache_headers(self.response, cache_time)
 
 		key = ndb.Key(Contributor, profile_path)
 		contributor = key.get()
@@ -129,13 +136,14 @@ class ProfilePathLookup(webapp2.RequestHandler):
 
 		data = {
 			"personal" : contributor.twitter_handle,
-			"brand" : brand_by_country.get(country, "guardian")
+			"brand" : "guardian",
 		}
 
 		if contributor.twitter_brand_handle:
 			data['brand'] = contributor.twitter_brand_handle
 
 		self.response.out.write(json.dumps(data))
+
 app = webapp2.WSGIApplication([
 	('/api/twitter/all', AllBylines),
 	('/api/twitter/lookup/byline', BylineLookup),

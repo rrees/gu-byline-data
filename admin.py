@@ -31,7 +31,7 @@ class AddContributor(webapp2.RequestHandler):
 	def get(self):
 		template = jinja_environment.get_template('admin/add-contributor.html')
 		
-		template_values = {'contributors' : Contributor().query()}
+		template_values = {'contributors' : Contributor().query().order(Contributor.profile_path)}
 
 		self.response.out.write(template.render(template_values))
 
