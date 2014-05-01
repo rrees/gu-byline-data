@@ -7,7 +7,9 @@ import datetime
 import csv
 from StringIO import StringIO
 from urllib import quote, urlencode
+
 from google.appengine.api import urlfetch
+from google.appengine.ext import ndb
 
 from models import Contributor
 
@@ -40,7 +42,10 @@ class AddContributor(webapp2.RequestHandler):
 		profile_path = self.request.get("profile_path")
 
 		if not profile_path:
-			abort(400)
+			webapp2.abort(400, "A profile path is required")
+
+		if not profile_path.startswith("/profile/"):
+			webapp2.abort(400, "Profile path should be /profile/<byline-slug-name>")
 
 		contributor = Contributor(id=profile_path, profile_path=profile_path)
 
@@ -56,7 +61,26 @@ class AddContributor(webapp2.RequestHandler):
 
 		self.redirect('/admin/add-contributor')
 
+class RemoveContributor(webapp2.RequestHandler):
+	def post(self):
+		profile_path = self.request.get("profile_path")
+
+		if not profile_path:
+			webapp2.abort(400, "A profile path is required")
+
+		contributor = ndb.Key('Contributor', profile_path).get()
+
+		if not contributor:
+			webapp2.abort(404, "Contributor with profile path {profile_path} not found".format(profile_path=profile_path))
+
+		#logging.info(contributor)
+
+		contributor.key.delete()
+
+		self.redirect('/admin/add-contributor')
+
 app = webapp2.WSGIApplication([
 	('/admin', AdminPage),
-	('/admin/add-contributor', AddContributor),],
+	('/admin/add-contributor', AddContributor),
+	('/admin/remove-contributor', RemoveContributor),],
                               debug=True)
