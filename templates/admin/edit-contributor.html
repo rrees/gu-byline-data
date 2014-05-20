@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit contributor | Admin{% endblock %}
+
+{% block content %}
+
+<div class="fluid-wrap">
+	<div class="fluid-row">
+		<div class="col-12">
+			<div class="hd">
+				<h1 class="heading">Edit contributor</h1>
+			</div>
+		</div>
+	</div>
+	<div class="fluid-row">
+		<div class="col-9">
+
+			<form method="POST" class="form">
+				<div class="field">
+					<label for="profile_path" class="field-label">Profile path</label>
+					<input id="profile_path" type="text" name="profile_path" value="{{contributor.profile_path}}" required>	
+				</div>
+				<div class="field">
+					<label for="twitter_handle" class="field-label">Twitter handle</label>
+					<input id="twitter_handle" type="text" name="twitter_handle" value="{{contributor.twitter_handle}}" required>
+				</div>
+				<div class="field">
+					<label for="twitter_brand_handle" class="field-label">Brand Twitter account</label>
+					<input id="twitter_brand_handle" type="text" name="twitter_brand_handle" {% if contributor.twitter_brand_handle %}value="{{contributor.twitter_brand_handle}}"{% endif %}>
+				</div>
+				<div class="field">
+					<label for="google_plus_id" class="field-label">Google Plus Id</label>
+					<input id="google_plus_id" type="text" name="google_plus_id" {% if contributor.google_plus_id %}value="{{contributor.google_plus_id}}"{% endif %}>
+				</div>
+				<div class="field-inputs">
+					<button type="submit" class="button">Save</button>
+				</div>
+			</form>
+			<a href="/admin/add-contributor"><button class="button">Back</button></a>
+
+		</div>
+		<div class="col-3">
+			<p>Back to <a href="/admin/add-contributor">list of contributors</a></p>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

@@ -24,9 +24,12 @@
 					<dt>Google Plus </dt><dd><a href="https://plus.google.com/{{contributor.google_plus_id}}">{{contributor.google_plus_id}}</a></dd>
 					{% endif %}
 				</dl>
-				<form method="POST" action="/admin/remove-contributor">
+				<form method="GET" action="/admin/edit-contributor/{{contributor.key.urlsafe()}}" class="contributor-data-inline-form">
+					<button type="submit" class="contributor-data-button">Edit</button>
+				</form>
+				<form method="POST" action="/admin/remove-contributor" class="contributor-data-inline-form">
 					<input type="hidden" name="profile_path" value="{{contributor.profile_path}}"/>
-					<button type="submit">Delete</button>
+					<button type="submit" class="contributor-data-button">Delete</button>
 				</form>
 			</section>
 			{% endfor %}

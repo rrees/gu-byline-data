@@ -8,3 +8,16 @@ body {
 	margin-bottom: 1rem;
 	padding: 0.5rem 1rem;
 }
+
+.contributor-data-inline-form {
+	display: inline-block;
+}
+
+.contributor-data-button {
+	background: none;
+	border: 1px #444 solid;
+	border-radius: 3px;
+	margin: 5px;
+	text-shadow: none;
+	color: #333;
+}

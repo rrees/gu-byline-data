@@ -79,8 +79,44 @@ class RemoveContributor(webapp2.RequestHandler):
 
 		self.redirect('/admin/add-contributor')
 
+class EditContributor(webapp2.RequestHandler):
+	def get(self, contributor_key):
+		template = jinja_environment.get_template('admin/edit-contributor.html')
+
+		key = ndb.Key(urlsafe=contributor_key)
+		
+		template_values = {'contributor' : key.get()}
+
+		self.response.out.write(template.render(template_values))
+
+	def post(self, contributor_key):
+
+		#logging.info(self.request.POST)
+
+		key = ndb.Key(urlsafe=contributor_key)
+
+		contributor = key.get()
+
+		if contributor:
+
+			field_names = ['profile_path', 'twitter_handle', 'twitter_brand_handle', 'google_plus_id']
+			required_fields = ['profile_path', 'twitter_handle']
+
+			for field in field_names:
+				if field in self.request.POST:
+					value = self.request.POST[field].strip()
+					if len(value) < 1 and field in required_fields:
+						continue
+					setattr(contributor, field, value if len(value) > 0 else None)
+
+			contributor.put()
+
+
+		self.redirect('/admin/edit-contributor/' + contributor_key)
+
 app = webapp2.WSGIApplication([
 	('/admin', AdminPage),
 	('/admin/add-contributor', AddContributor),
-	('/admin/remove-contributor', RemoveContributor),],
+	('/admin/remove-contributor', RemoveContributor),
+	webapp2.Route(r'/admin/edit-contributor/<contributor_key>', handler=EditContributor)],
                               debug=True)
