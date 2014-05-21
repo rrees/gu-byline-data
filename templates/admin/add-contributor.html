@@ -13,9 +13,9 @@
 	<div class="fluid-row margin-top">
 		<div class="col-8">
 			{% for contributor in contributors %}
-			<section class="contributor-data">
+			<section id="{{contributor.key.urlsafe()}}" class="contributor-data">
 				<dl>
-					<dt>Profile path</dt><dd><a href="http://www.theguardian.com/{{contributor.profile_path}}">{{contributor.profile_path}}</a></dd>
+					<dt>Profile path</dt><dd><a href="http://www.theguardian.com{{contributor.profile_path}}">{{contributor.profile_path}}</a></dd>
 					<dt>Twitter handle</dt><dd><a href="https://twitter.com/{{contributor.twitter_handle}}">{{contributor.twitter_handle}}</a></dd>
 					{% if contributor.twitter_brand_handle %}
 					<dt>Brand Twitter handle</dt><dd><a href="https://twitter.com/{{contributor.twitter_brand_handle}}">{{contributor.twitter_brand_handle}}</a></dd>
@@ -35,23 +35,26 @@
 			{% endfor %}
 		</div>
 		<div class="col-4">
-			<h2 class="sub-heading">Add a new contributor</h2>
-			<form method="POST">
-				<div class="field">
-					<label class="field-label">Profile path<br><input id="profile-path" type="text" name="profile_path" required></label>
-						
-				</div>
-				<div class="field">
-				<label>Twitter handle<br><input type="text" name="twitter_handle" required></label>
-				</div>
-				<div class="field">
-				<label>Brand Twitter account<br><input type="text" name="twitter_brand_handle"></label>
-				</div>
-				<div class="field">
-				<label>Google Plus Id<br><input type="text" name="google_plus_id"></label>
-				</div>
-				<button type="submit">Add</button>
-			</form>
+			<div class="new-contributor-form-wrapper">
+				<h2 class="sub-heading">Add a new contributor</h2>
+
+				<form method="POST">
+					<div class="field">
+						<label>Profile path<br><input id="profile-path" type="text" name="profile_path" required></label>
+							
+					</div>
+					<div class="field">
+					<label>Twitter handle<br><input type="text" name="twitter_handle" required></label>
+					</div>
+					<div class="field">
+					<label>Brand Twitter account<br><input type="text" name="twitter_brand_handle"></label>
+					</div>
+					<div class="field">
+					<label>Google Plus Id<br><input type="text" name="google_plus_id"></label>
+					</div>
+					<button type="submit">Add</button>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>
